@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tracking Antrian</title>
+
+  <style>
+    body{
+      font-family: Arial;
+      text-align:center;
+      margin-top:50px;
+    }
+
+    .card{
+      width:300px;
+      margin:auto;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 0 10px #ccc;
+    }
+
+    .status{
+      font-size:30px;
+      color:green;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="card">
+
+<h1 id="nomor">Loading...</h1>
+
+<div class="status" id="status">
+...
+</div>
+
+<p id="loket"></p>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get('id');
+
+async function loadData(){
+
+const sheetID = '1ABCXYZ123';
+
+const url =
+`https://opensheet.elk.sh/${sheetID}/Sheet1`;
+
+const res = await fetch(url);
+
+const data = await res.json();
+
+const item = data.find(x => x.kode == id);
+
+if(item){
+
+document.getElementById('nomor').innerHTML =
+'Nomor ' + item.nomor;
+
+document.getElementById('status').innerHTML =
+item.status;
+
+document.getElementById('loket').innerHTML =
+'Loket : ' + item.loket;
+
+}
+
+}
+
+loadData();
+
+setInterval(loadData,3000);
+
+</script>
+
+</body>
+</html>
