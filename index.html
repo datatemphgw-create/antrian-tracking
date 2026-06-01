@@ -12,17 +12,41 @@ body{
     margin:0;
     padding:20px;
     font-family:Arial,sans-serif;
-    background:#f5f7fa;
+    background-image:url('hermina_gold_3.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 .card{
     max-width:500px;
     margin:50px auto;
-    background:white;
-    border-radius:20px;
+    background:radial-gradient(circle at 0 115px, transparent 15px, white 16px) top left / 50% 100% no-repeat,
+               radial-gradient(circle at 100% 115px, transparent 15px, white 16px) top right / 50% 100% no-repeat;
+    border-radius:15px;
     padding:30px;
-    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    filter:drop-shadow(0 5px 20px rgba(0,0,0,.1));
     text-align:center;
+}
+
+.kop{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    margin:0 -15px 30px -15px;
+    padding-bottom:25px;
+    border-bottom:2px dashed #ccc;
+}
+
+.kop img{
+    width:60px;
+}
+
+.kop h2{
+    margin:0;
+    font-size:24px;
+    color:#2e7d32;
 }
 
 .nomor{
@@ -32,9 +56,10 @@ body{
 }
 
 .status{
-    font-size:28px;
+    font-size:24px;
     font-weight:bold;
     margin-bottom:15px;
+    text-transform:capitalize;
 }
 
 .waktu{
@@ -58,12 +83,28 @@ body{
     color:red;
 }
 
+.footer{
+    position:fixed;
+    bottom:20px;
+    left:0;
+    width:100%;
+    text-align:center;
+    font-size:14px;
+    color:#555;
+    font-weight:bold;
+}
+
 </style>
 
 </head>
 <body>
 
 <div class="card">
+
+<div class="kop">
+    <img src="192x192.png" alt="Logo Hermina">
+    <h2>Tracking Antrian</h2>
+</div>
 
 <div id="nomor" class="nomor">
 Loading...
@@ -77,6 +118,10 @@ Loading...
 ...
 </div>
 
+</div>
+
+<div class="footer">
+    Developed by IT RS Hermina Grand Wisata
 </div>
 
 <script>
@@ -127,15 +172,23 @@ async function loadData(){
         const statusElement =
         document.getElementById("status");
 
-        statusElement.innerHTML =
-        status.replace("_"," ");
+        let statusText = status.replace(/_/g," ");
+
+        if (statusText.toLowerCase() === "menunggu pembayaran") {
+            statusText = "menunggu proses kasir";
+        }
+
+        statusElement.innerHTML = statusText;
 
         statusElement.className =
         "status " + status;
 
-        document.getElementById("waktu").innerHTML =
-        "Waktu Panggil : " +
-        item["WAKTU PANGGIL"];
+        if (item["WAKTU PANGGIL"] && item["WAKTU PANGGIL"] !== "null" && String(item["WAKTU PANGGIL"]).trim() !== "") {
+            document.getElementById("waktu").innerHTML =
+            "Dipanggil : " + item["WAKTU PANGGIL"];
+        } else {
+            document.getElementById("waktu").innerHTML = "";
+        }
 
     }
     catch(err){
@@ -155,7 +208,7 @@ async function loadData(){
 loadData();
 
 // refresh tiap 3 detik
-setInterval(loadData,3000);
+setInterval(loadData,1000);
 
 </script>
 
