@@ -191,9 +191,9 @@ async function loadData(){
         let statusText = status.replace(/_/g," ");
 
         if (statusText.toLowerCase() === "menunggu pembayaran") {
-            statusText = "menunggu proses kasir";
+            statusText = "proses kasir";
         } else if (statusText.toLowerCase() === "proses") {
-            statusText = "obat sedang diproses";
+            statusText = "obat diproses";
         }
 
         statusElement.innerHTML = statusText;
