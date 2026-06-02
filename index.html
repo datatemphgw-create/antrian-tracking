@@ -178,6 +178,10 @@ async function loadData(){
             statusText = "menunggu proses kasir";
         }
 
+        if (statusText.toLowerCase() === "proses") {
+            statusText = "obat sedang di proses";
+        }
+
         statusElement.innerHTML = statusText;
 
         statusElement.className =
