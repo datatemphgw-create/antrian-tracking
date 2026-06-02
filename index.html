@@ -49,15 +49,28 @@ body{
     color:#2e7d32;
 }
 
+.ticket-body{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.status-waktu{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    text-align:right;
+}
+
 .nomor{
     font-size:48px;
     font-weight:bold;
-    margin-bottom:20px;
 }
 
 .status{
     font-size:18px;
-    margin-bottom:15px;
+    margin-bottom:5px;
     text-transform:capitalize;
 }
 
@@ -105,16 +118,20 @@ body{
     <h2>Tracking Antrian</h2>
 </div>
 
-<div id="nomor" class="nomor">
-Loading...
-</div>
+<div class="ticket-body">
+    <div id="nomor" class="nomor">
+    Loading...
+    </div>
 
-<div id="status" class="status">
-...
-</div>
+    <div class="status-waktu">
+        <div id="status" class="status">
+        ...
+        </div>
 
-<div id="waktu" class="waktu">
-...
+        <div id="waktu" class="waktu">
+        ...
+        </div>
+    </div>
 </div>
 
 </div>
