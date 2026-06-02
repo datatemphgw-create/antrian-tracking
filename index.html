@@ -176,10 +176,8 @@ async function loadData(){
 
         if (statusText.toLowerCase() === "menunggu pembayaran") {
             statusText = "menunggu proses kasir";
-        }
-
-        if (statusText.toLowerCase() === "proses") {
-            statusText = "obat sedang di proses";
+        } else if (statusText.toLowerCase() === "proses") {
+            statusText = "obat sedang diproses";
         }
 
         statusElement.innerHTML = statusText;
