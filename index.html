@@ -263,13 +263,12 @@ async function loadData(){
 
         let statusText = status.replace(/_/g," ");
 
-        if (statusText.toLowerCase() === "menunggu pembayaran") {
+        if (statusText.toLowerCase() === "menunggu") {
+            statusText = "menunggu panggilan";
+        } else if (statusText.toLowerCase() === "menunggu pembayaran") {
             statusText = "proses kasir";
         } else if (statusText.toLowerCase() === "proses") {
             statusText = "obat diproses";
-        }
-        else if (statusText.toLowerCase() === "menunggu") {
-            statusText = "Menunggu Panggilan";
         }
 
         statusElement.innerHTML = statusText;
