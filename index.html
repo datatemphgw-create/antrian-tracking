@@ -229,10 +229,7 @@ async function loadData(){
 
     try{
 
-        const sheetID = "16iYxxNHNBgSmFCa7DZ8MFLTpvF5cZttXVB8yxp8VjXw";
-
-        const url =
-        `https://opensheet.elk.sh/${sheetID}/antrian`;
+        const url = "https://script.google.com/macros/s/AKfycbxkS8sgA7rdkwDDDDBPdziAD3Wt3FSa-myU40cyzmHyFk8xiV5lG6QTwNXaui18yCXI-A/exec";
 
         const response = await fetch(url);
         const data = await response.json();
@@ -240,7 +237,7 @@ async function loadData(){
         console.log(data);
 
         const item = data.find(
-            row => row["NO ANTRIAN"] === id
+            (row, index) => index > 0 && row[0] === id
         );
 
         if(!item){
@@ -256,10 +253,10 @@ async function loadData(){
         }
 
         document.getElementById("nomor").innerHTML =
-        item["NO ANTRIAN"];
+        item[0];
 
         const status =
-        item["STATUS"];
+        item[1];
 
         const statusElement =
         document.getElementById("status");
@@ -277,16 +274,16 @@ async function loadData(){
         statusElement.className =
         "status " + status;
 
-        if (item["WAKTU PANGGIL"] && item["WAKTU PANGGIL"] !== "null" && String(item["WAKTU PANGGIL"]).trim() !== "") {
+        if (item[2] && item[2] !== "null" && item[2] !== "-" && String(item[2]).trim() !== "") {
             document.getElementById("waktu").innerHTML =
-            "Dipanggil : " + item["WAKTU PANGGIL"];
+            "Dipanggil : " + item[2];
             
-            if (!isInitialLoad && lastWaktuPanggil !== item["WAKTU PANGGIL"]) {
-                showPopup(item["NO ANTRIAN"]);
+            if (!isInitialLoad && lastWaktuPanggil !== item[2]) {
+                showPopup(item[0]);
                 playNotification();
             }
             
-            lastWaktuPanggil = item["WAKTU PANGGIL"];
+            lastWaktuPanggil = item[2];
         } else {
             document.getElementById("waktu").innerHTML = "";
         }
@@ -324,7 +321,7 @@ function playNotification() {
 
 loadData();
 
-// refresh tiap 3 detik
+// refresh tiap 1 detik
 setInterval(loadData,1000);
 
 </script>
